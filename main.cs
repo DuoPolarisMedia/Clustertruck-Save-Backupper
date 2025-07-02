@@ -6,8 +6,8 @@ using System.Drawing;
 
 class SaveData : Form
 {
-    private Button btnBackup;
-    private Button btnRestore;
+    private Button btnExport;
+    private Button btnLoad;
     private Label lblTitle;
 
     [STAThread]
@@ -19,40 +19,40 @@ class SaveData : Form
 
     public SaveData()
     {
-        this.Text = "Clustertruck Backupper";
+        this.Text = "TruckClusterer";
         this.ClientSize = new Size(360, 160);
         this.FormBorderStyle = FormBorderStyle.FixedDialog;
         this.MaximizeBox = false;
 
         lblTitle = new Label()
         {
-            Text = "Backup and Restore your Clustertruck save",
+            Text = "Convert Clustertruck saves between Registry \nEntries and portable .reg files.",
             AutoSize = true,
             Location = new Point(20, 20)
         };
 
-        btnBackup = new Button()
+        btnExport = new Button()
         {
-            Text = "Backup Save",
+            Text = "Export Save",
             Location = new Point(20, 60),
             Size = new Size(140, 30)
         };
-        btnBackup.Click += new EventHandler(Backup_Click);
+        btnExport.Click += new EventHandler(Export_Click);
 
-        btnRestore = new Button()
+        btnLoad = new Button()
         {
-            Text = "Restore Save",
+            Text = "Load Save",
             Location = new Point(180, 60),
             Size = new Size(140, 30)
         };
-        btnRestore.Click += new EventHandler(Restore_Click);
+        btnLoad.Click += new EventHandler(Load_Click);
 
         this.Controls.Add(lblTitle);
-        this.Controls.Add(btnBackup);
-        this.Controls.Add(btnRestore);
+        this.Controls.Add(btnExport);
+        this.Controls.Add(btnLoad);
     }
 
-    private void Backup_Click(object sender, EventArgs e)
+    private void Export_Click(object sender, EventArgs e)
     {
         SaveFileDialog save = new SaveFileDialog();
         save.Filter = "Registry File (*.reg)|*.reg";
@@ -69,16 +69,16 @@ class SaveData : Form
             try
             {
                 Process.Start(psi).WaitForExit();
-                MessageBox.Show("Backup successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Export successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch
             {
-                MessageBox.Show("Failed to backup registry key.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Export failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
 
-    private void Restore_Click(object sender, EventArgs e)
+    private void Load_Click(object sender, EventArgs e)
     {
         OpenFileDialog open = new OpenFileDialog();
         open.Filter = "Registry File (*.reg)|*.reg";
@@ -93,7 +93,7 @@ class SaveData : Form
             try
             {
                 Process.Start(psi).WaitForExit();
-                MessageBox.Show("Restore successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Load successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch
             {
